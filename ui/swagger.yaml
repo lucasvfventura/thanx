@@ -1,0 +1,725 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/authentication/login":
+    post:
+      summary: User login
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  refresh_token:
+                    type: string
+                required:
+                - token
+                - refresh_token
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+                  example: password
+              required:
+              - email
+              - password
+  "/authentication/refresh":
+    post:
+      summary: Refresh JWT
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  refresh_token:
+                    type: string
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+              required:
+              - refresh_token
+  "/authentication/change_password":
+    patch:
+      summary: Change user password
+      tags:
+      - Authentication
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '200':
+          description: password changed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: current password incorrect
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '422':
+          description: invalid new password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                current_password:
+                  type: string
+                  example: oldpassword
+                new_password:
+                  type: string
+                  example: newsecurepassword
+              required:
+              - current_password
+              - new_password
+  "/authentication/signup":
+    post:
+      summary: User sign up
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful signup
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  refresh_token:
+                    type: string
+                required:
+                - token
+                - refresh_token
+        '422':
+          description: missing fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: newuser@example.com
+                password:
+                  type: string
+                  example: password123
+                password_confirmation:
+                  type: string
+                  example: password123
+              required:
+              - email
+              - password
+              - password_confirmation
+  "/redemptions":
+    get:
+      summary: list redemptions
+      tags:
+      - Redemptions
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redemptions:
+                    type: array
+                    items:
+                      type: object
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total:
+                        type: integer
+                      total_pages:
+                        type: integer
+                    required:
+                    - page
+                    - per_page
+                    - total
+                    - total_pages
+                required:
+                - redemptions
+                - pagination
+    post:
+      summary: create redemption
+      tags:
+      - Redemptions
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '200':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  reward_id:
+                    type: integer
+                  quantity:
+                    type: integer
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  reward_id:
+                    type: integer
+                  quantity:
+                    type: integer
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reward_id:
+                  type: integer
+                quantity:
+                  type: integer
+              required:
+              - reward_id
+              - quantity
+  "/redemptions/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: show redemption
+      tags:
+      - Redemptions
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  reward_id:
+                    type: integer
+                  quantity:
+                    type: integer
+        '404':
+          description: not found
+  "/rewards":
+    get:
+      summary: list rewards
+      tags:
+      - Rewards
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rewards:
+                    type: array
+                    items:
+                      type: object
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total:
+                        type: integer
+                      total_pages:
+                        type: integer
+                    required:
+                    - page
+                    - per_page
+                    - total
+                    - total_pages
+                required:
+                - rewards
+                - pagination
+    post:
+      summary: create reward
+      tags:
+      - Rewards
+      parameters: []
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  value_per_unit:
+                    type: integer
+                  quantity:
+                    type: integer
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Free Coffee
+                description:
+                  type: string
+                  example: Get a free coffee
+                value_per_unit:
+                  type: integer
+                  example: 100
+                quantity:
+                  type: integer
+                  example: 100
+              required:
+              - title
+              - description
+              - value_per_unit
+              - quantity
+        required: true
+  "/rewards/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: show reward
+      tags:
+      - Rewards
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  value_per_unit:
+                    type: integer
+                  quantity:
+                    type: integer
+        '404':
+          description: not found
+    put:
+      summary: update reward
+      tags:
+      - Rewards
+      parameters: []
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  value_per_unit:
+                    type: integer
+                  quantity:
+                    type: integer
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                value_per_unit:
+                  type: integer
+                quantity:
+                  type: integer
+    delete:
+      summary: delete reward
+      tags:
+      - Rewards
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: no content
+        '403':
+          description: unauthorized
+        '404':
+          description: not found
+  "/users":
+    get:
+      summary: list users
+      tags:
+      - Users
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '403':
+          description: unauthorized
+    post:
+      summary: create user
+      tags:
+      - Users
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  role:
+                    type: integer
+                  balance_points:
+                    type: integer
+        '403':
+          description: unauthorized
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: someone@example.com
+                    password:
+                      type: string
+                      example: password123
+                    password_confirmation:
+                      type: string
+                      example: password123
+                    role:
+                      type: integer
+                      example: 1
+                    balance_points:
+                      type: integer
+                      example: 0
+                  required:
+                  - email
+                  - password
+                  - password_confirmation
+                  - role
+                  - balance_points
+              required:
+              - user
+  "/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: show user
+      tags:
+      - Users
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  role:
+                    type: integer
+                  balance_points:
+                    type: integer
+        '403':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  role:
+                    type: integer
+                  balance_points:
+                    type: integer
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  role:
+                    type: integer
+                  balance_points:
+                    type: integer
+    put:
+      summary: update user
+      tags:
+      - Users
+      parameters: []
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  role:
+                    type: integer
+                  balance_points:
+                    type: integer
+        '403':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  role:
+                    type: integer
+                  balance_points:
+                    type: integer
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+                role:
+                  type: integer
+                balance_points:
+                  type: integer
+    delete:
+      summary: delete user
+      tags:
+      - Users
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '403':
+          description: unauthorized
+        '404':
+          description: not found
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: localhost:3000
