@@ -24,7 +24,7 @@ The core models of the application are:
 Two users are provided in the database:
 
 - Admin: admin@example.com / password
-- User: client@example.com / password
+- User: user@example.com / password
 ```
 
 ---
@@ -33,8 +33,8 @@ Two users are provided in the database:
 The backend is a RESTful API built with Ruby on Rails:
 - **Authentication**: JWT-based, with endpoints for login, sign up, refresh, and password change.
 - **Users**: Admins can manage users. Users can view their own profile.
-- **Rewards**: Admins can create rewards. Users can view and redeem rewards.
-- **Redemptions**: Users can view their redemption history.
+- **Rewards**: Admins can create rewards. Users can view and list rewards.
+- **Redemptions**: Users can view their redemption history and redeem rewards.
 
 API documentation is auto-generated using Rswag and OpenAPI/Swagger, and available in the repo (`swagger.yaml`).
 
@@ -98,7 +98,7 @@ Next was used to provide server side rendering for the UI. This is not required 
 ---
 
 ## Next Steps
-- Add pagination to redemptions and rewards lists
+- Add pagination to users, redemptions, and rewards lists
 - Improve api documentation witch will improve typing for the UI
 - Add reward editing and deletion for admins
 - Improve error handling and form validation in the UI
