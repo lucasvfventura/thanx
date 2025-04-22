@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { usePostRedemptions } from "@/api/redemptions/redemptions";
 import type { PostRedemptionsBody } from "@/api/model/postRedemptionsBody";
 import { useCredentials } from "@/app/credentialsProvider";
+import { GetRewards200RewardsItem } from "@/api/model";
 
 interface RedeemRewardProps {
-  reward: any;
+  reward: GetRewards200RewardsItem;
   balancePoints: number;
   onRedeemed?: () => void;
 }

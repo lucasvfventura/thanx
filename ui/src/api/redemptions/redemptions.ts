@@ -25,10 +25,6 @@ import type {
 
 import type {
   GetRedemptions200,
-  GetRedemptionsId200,
-  PostRedemptions200,
-  PostRedemptions404,
-  PostRedemptions422,
   PostRedemptionsBody
 } from '.././model';
 
@@ -37,14 +33,19 @@ import type {
 
 
 /**
- * @summary list redemptions
+ * @summary List redemptions
  */
 export type getRedemptionsResponse200 = {
   data: GetRedemptions200
   status: 200
 }
+
+export type getRedemptionsResponse401 = {
+  data: void
+  status: 401
+}
     
-export type getRedemptionsResponseComposite = getRedemptionsResponse200;
+export type getRedemptionsResponseComposite = getRedemptionsResponse200 | getRedemptionsResponse401;
     
 export type getRedemptionsResponse = getRedemptionsResponseComposite & {
   headers: Headers;
@@ -82,7 +83,7 @@ export const getGetRedemptionsQueryKey = () => {
     }
 
     
-export const getGetRedemptionsQueryOptions = <TData = Awaited<ReturnType<typeof getRedemptions>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRedemptions>>, TError, TData>>, fetch?: RequestInit}
+export const getGetRedemptionsQueryOptions = <TData = Awaited<ReturnType<typeof getRedemptions>>, TError = void>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRedemptions>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
 const {query: queryOptions, fetch: fetchOptions} = options ?? {};
@@ -101,10 +102,10 @@ const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 }
 
 export type GetRedemptionsQueryResult = NonNullable<Awaited<ReturnType<typeof getRedemptions>>>
-export type GetRedemptionsQueryError = unknown
+export type GetRedemptionsQueryError = void
 
 
-export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = unknown>(
+export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = void>(
   options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRedemptions>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRedemptions>>,
@@ -114,7 +115,7 @@ export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptio
       >, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = unknown>(
+export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = void>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRedemptions>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRedemptions>>,
@@ -124,15 +125,15 @@ export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptio
       >, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = unknown>(
+export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = void>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRedemptions>>, TError, TData>>, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary list redemptions
+ * @summary List redemptions
  */
 
-export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = unknown>(
+export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptions>>, TError = void>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRedemptions>>, TError, TData>>, fetch?: RequestInit}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -149,24 +150,19 @@ export function useGetRedemptions<TData = Awaited<ReturnType<typeof getRedemptio
 
 
 /**
- * @summary create redemption
+ * @summary Create redemption
  */
-export type postRedemptionsResponse200 = {
-  data: PostRedemptions200
-  status: 200
+export type postRedemptionsResponse201 = {
+  data: void
+  status: 201
 }
 
-export type postRedemptionsResponse404 = {
-  data: PostRedemptions404
-  status: 404
-}
-
-export type postRedemptionsResponse422 = {
-  data: PostRedemptions422
-  status: 422
+export type postRedemptionsResponse401 = {
+  data: void
+  status: 401
 }
     
-export type postRedemptionsResponseComposite = postRedemptionsResponse200 | postRedemptionsResponse404 | postRedemptionsResponse422;
+export type postRedemptionsResponseComposite = postRedemptionsResponse201 | postRedemptionsResponse401;
     
 export type postRedemptionsResponse = postRedemptionsResponseComposite & {
   headers: Headers;
@@ -201,7 +197,7 @@ export const postRedemptions = async (postRedemptionsBody: PostRedemptionsBody, 
 
 
 
-export const getPostRedemptionsMutationOptions = <TError = PostRedemptions404 | PostRedemptions422,
+export const getPostRedemptionsMutationOptions = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postRedemptions>>, TError,{data: PostRedemptionsBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postRedemptions>>, TError,{data: PostRedemptionsBody}, TContext> => {
     
@@ -228,12 +224,12 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type PostRedemptionsMutationResult = NonNullable<Awaited<ReturnType<typeof postRedemptions>>>
     export type PostRedemptionsMutationBody = PostRedemptionsBody
-    export type PostRedemptionsMutationError = PostRedemptions404 | PostRedemptions422
+    export type PostRedemptionsMutationError = void
 
     /**
- * @summary create redemption
+ * @summary Create redemption
  */
-export const usePostRedemptions = <TError = PostRedemptions404 | PostRedemptions422,
+export const usePostRedemptions = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postRedemptions>>, TError,{data: PostRedemptionsBody}, TContext>, fetch?: RequestInit}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postRedemptions>>,
@@ -247,19 +243,19 @@ export const usePostRedemptions = <TError = PostRedemptions404 | PostRedemptions
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary show redemption
+ * @summary Show redemption
  */
 export type getRedemptionsIdResponse200 = {
-  data: GetRedemptionsId200
+  data: void
   status: 200
 }
 
-export type getRedemptionsIdResponse404 = {
+export type getRedemptionsIdResponse403 = {
   data: void
-  status: 404
+  status: 403
 }
     
-export type getRedemptionsIdResponseComposite = getRedemptionsIdResponse200 | getRedemptionsIdResponse404;
+export type getRedemptionsIdResponseComposite = getRedemptionsIdResponse200 | getRedemptionsIdResponse403;
     
 export type getRedemptionsIdResponse = getRedemptionsIdResponseComposite & {
   headers: Headers;
@@ -344,7 +340,7 @@ export function useGetRedemptionsId<TData = Awaited<ReturnType<typeof getRedempt
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary show redemption
+ * @summary Show redemption
  */
 
 export function useGetRedemptionsId<TData = Awaited<ReturnType<typeof getRedemptionsId>>, TError = void>(

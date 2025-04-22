@@ -6,6 +6,6 @@
  */
 
 export type PostAuthenticationSignup200 = {
-  token: string;
-  refresh_token: string;
+  token?: string;
+  refresh_token?: string;
 };

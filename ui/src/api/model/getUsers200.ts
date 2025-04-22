@@ -4,11 +4,11 @@
  * API V1
  * OpenAPI spec version: v1
  */
-import type { GetRewards200RewardsItem } from './getRewards200RewardsItem';
+import type { GetUsers200UsersItem } from './getUsers200UsersItem';
 
-export type GetRewards200 = {
+export type GetUsers200 = {
   current_page: number;
   total_pages: number;
   total_count: number;
-  rewards: GetRewards200RewardsItem[];
+  users: GetUsers200UsersItem[];
 };

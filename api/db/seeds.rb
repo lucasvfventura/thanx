@@ -11,14 +11,14 @@
 User.find_or_create_by!(email: "admin@example.com") do |user|
   user.password = "password"
   user.password_confirmation = "password"
-  user.role = :admin
+  user.role = 0
   user.balance_points = 1000
 end
 
 User.find_or_create_by!(email: "user@example.com") do |user|
   user.password = "password"
   user.password_confirmation = "password"
-  user.role = :user
+  user.role = 1
   user.balance_points = 100
 end
 

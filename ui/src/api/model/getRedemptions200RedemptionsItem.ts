@@ -4,5 +4,13 @@
  * API V1
  * OpenAPI spec version: v1
  */
+import type { GetRedemptions200RedemptionsItemReward } from './getRedemptions200RedemptionsItemReward';
 
-export type GetRedemptions200RedemptionsItem = { [key: string]: unknown };
+export type GetRedemptions200RedemptionsItem = {
+  id: number;
+  user_id: number;
+  reward: GetRedemptions200RedemptionsItemReward;
+  quantity: number;
+  created_at: string;
+  updated_at: string;
+};

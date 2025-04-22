@@ -6,5 +6,5 @@
  */
 
 export type PostAuthenticationSignup422 = {
-  errors?: string[];
+  error?: string;
 };

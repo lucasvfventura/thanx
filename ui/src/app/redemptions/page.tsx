@@ -43,7 +43,7 @@ export default function RedemptionsPage() {
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6">Redemptions</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.data?.redemptions?.map((redemption: any) => (
+        {data?.data?.redemptions?.map((redemption) => (
           <Card key={redemption.id} className="p-6 flex flex-col gap-2 bg-card border border-border">
             <div className="font-bold text-lg">{redemption.reward?.title || 'Reward'}</div>
             <div className="text-sm">Date: <span className="font-mono">{redemption.created_at ? new Date(redemption.created_at).toLocaleString() : ''}</span></div>

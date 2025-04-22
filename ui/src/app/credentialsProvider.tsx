@@ -61,7 +61,7 @@ export const CredentialsProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   useEffect(() => {
     refetchUser();
-  }, [userId]);
+  }, [userId, refetchUser]);
 
   useEffect(() => {
     if (user?.data?.balance_points !== undefined) {

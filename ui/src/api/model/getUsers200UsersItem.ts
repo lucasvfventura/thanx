@@ -5,10 +5,11 @@
  * OpenAPI spec version: v1
  */
 
-export type PostUsersBodyUser = {
+export type GetUsers200UsersItem = {
+  id: number;
   email: string;
-  password: string;
-  password_confirmation: string;
   role: number;
   balance_points: number;
+  created_at: string;
+  updated_at: string;
 };

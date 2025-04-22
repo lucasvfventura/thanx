@@ -6,8 +6,10 @@
  */
 
 export type PostUsers201 = {
-  id?: number;
-  email?: string;
-  role?: number;
-  balance_points?: number;
+  id: number;
+  email: string;
+  role: number;
+  balance_points: number;
+  created_at: string;
+  updated_at: string;
 };

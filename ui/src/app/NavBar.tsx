@@ -2,6 +2,7 @@
 import { useCredentials } from "./credentialsProvider";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function NavBar() {
   const { getRole, getBalancePoints, clear } = useCredentials();
@@ -11,12 +12,11 @@ export default function NavBar() {
   return (
     <nav className="w-full flex items-center justify-between px-6 py-4 border-b border-border mb-6">
       <div className="flex gap-4 items-center">
-        <a href="/" className="font-bold text-lg">Thanx</a>
-        {role !== null && <a href="/redemptions" className="hover:underline">Redemptions</a>}
+        <Link href="/" className="font-bold text-lg">Thanx</Link>
+        {role !== null && <Link href="/redemptions" className="hover:underline">Redemptions</Link>}
         {/* Show only for admin */}
         {role === 0 && <>
-          <a href="/rewards" className="hover:underline">Rewards</a>
-          <a href="/users" className="hover:underline">Users</a>
+          <Link href="/users" className="hover:underline">Users</Link>
         </>}
 
       </div>
@@ -27,8 +27,8 @@ export default function NavBar() {
         {/* Show login/logout based on auth state */}
         {role === null ? (
           <>
-            <a href="/login" className="hover:underline">Login</a>
-            <a href="/signup" className="hover:underline">Sign Up</a>
+            <Link href="/login" className="hover:underline">Login</Link>
+            <Link href="/signup" className="hover:underline">Sign Up</Link>
           </>
         ) : (
           <Button onClick={() => {clear(); router.push("/login")}}>Logout</Button>

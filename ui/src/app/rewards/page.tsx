@@ -34,7 +34,7 @@ export default function RewardsAdminPage() {
         setValuePerUnit(0);
         setQuantity(0);
       },
-      onError: (err: any) => {
+      onError: () => {
         setError("Failed to create reward.");
         setSuccess(null);
       },

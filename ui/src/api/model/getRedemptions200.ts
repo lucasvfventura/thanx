@@ -5,9 +5,10 @@
  * OpenAPI spec version: v1
  */
 import type { GetRedemptions200RedemptionsItem } from './getRedemptions200RedemptionsItem';
-import type { GetRedemptions200Pagination } from './getRedemptions200Pagination';
 
 export type GetRedemptions200 = {
+  current_page: number;
+  total_pages: number;
+  total_count: number;
   redemptions: GetRedemptions200RedemptionsItem[];
-  pagination: GetRedemptions200Pagination;
 };

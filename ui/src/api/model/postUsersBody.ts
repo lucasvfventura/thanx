@@ -4,8 +4,11 @@
  * API V1
  * OpenAPI spec version: v1
  */
-import type { PostUsersBodyUser } from './postUsersBodyUser';
 
 export type PostUsersBody = {
-  user: PostUsersBodyUser;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  role: number;
+  balance_points: number;
 };

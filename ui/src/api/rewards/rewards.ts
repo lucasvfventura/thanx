@@ -25,11 +25,7 @@ import type {
 
 import type {
   GetRewards200,
-  GetRewardsId200,
-  PostRewards201,
-  PostRewards422,
   PostRewardsBody,
-  PutRewardsId200,
   PutRewardsIdBody
 } from '.././model';
 
@@ -38,7 +34,7 @@ import type {
 
 
 /**
- * @summary list rewards
+ * @summary List rewards
  */
 export type getRewardsResponse200 = {
   data: GetRewards200
@@ -130,7 +126,7 @@ export function useGetRewards<TData = Awaited<ReturnType<typeof getRewards>>, TE
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary list rewards
+ * @summary List rewards
  */
 
 export function useGetRewards<TData = Awaited<ReturnType<typeof getRewards>>, TError = unknown>(
@@ -150,19 +146,19 @@ export function useGetRewards<TData = Awaited<ReturnType<typeof getRewards>>, TE
 
 
 /**
- * @summary create reward
+ * @summary Create reward
  */
 export type postRewardsResponse201 = {
-  data: PostRewards201
+  data: void
   status: 201
 }
 
-export type postRewardsResponse422 = {
-  data: PostRewards422
-  status: 422
+export type postRewardsResponse403 = {
+  data: void
+  status: 403
 }
     
-export type postRewardsResponseComposite = postRewardsResponse201 | postRewardsResponse422;
+export type postRewardsResponseComposite = postRewardsResponse201 | postRewardsResponse403;
     
 export type postRewardsResponse = postRewardsResponseComposite & {
   headers: Headers;
@@ -197,7 +193,7 @@ export const postRewards = async (postRewardsBody: PostRewardsBody, options?: Re
 
 
 
-export const getPostRewardsMutationOptions = <TError = PostRewards422,
+export const getPostRewardsMutationOptions = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postRewards>>, TError,{data: PostRewardsBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postRewards>>, TError,{data: PostRewardsBody}, TContext> => {
     
@@ -224,12 +220,12 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type PostRewardsMutationResult = NonNullable<Awaited<ReturnType<typeof postRewards>>>
     export type PostRewardsMutationBody = PostRewardsBody
-    export type PostRewardsMutationError = PostRewards422
+    export type PostRewardsMutationError = void
 
     /**
- * @summary create reward
+ * @summary Create reward
  */
-export const usePostRewards = <TError = PostRewards422,
+export const usePostRewards = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postRewards>>, TError,{data: PostRewardsBody}, TContext>, fetch?: RequestInit}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postRewards>>,
@@ -243,10 +239,10 @@ export const usePostRewards = <TError = PostRewards422,
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary show reward
+ * @summary Show reward
  */
 export type getRewardsIdResponse200 = {
-  data: GetRewardsId200
+  data: void
   status: 200
 }
 
@@ -340,7 +336,7 @@ export function useGetRewardsId<TData = Awaited<ReturnType<typeof getRewardsId>>
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary show reward
+ * @summary Show reward
  */
 
 export function useGetRewardsId<TData = Awaited<ReturnType<typeof getRewardsId>>, TError = void>(
@@ -360,19 +356,19 @@ export function useGetRewardsId<TData = Awaited<ReturnType<typeof getRewardsId>>
 
 
 /**
- * @summary update reward
+ * @summary Update reward
  */
 export type putRewardsIdResponse200 = {
-  data: PutRewardsId200
+  data: void
   status: 200
 }
 
-export type putRewardsIdResponse422 = {
+export type putRewardsIdResponse403 = {
   data: void
-  status: 422
+  status: 403
 }
     
-export type putRewardsIdResponseComposite = putRewardsIdResponse200 | putRewardsIdResponse422;
+export type putRewardsIdResponseComposite = putRewardsIdResponse200 | putRewardsIdResponse403;
     
 export type putRewardsIdResponse = putRewardsIdResponseComposite & {
   headers: Headers;
@@ -438,7 +434,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
     export type PutRewardsIdMutationError = void
 
     /**
- * @summary update reward
+ * @summary Update reward
  */
 export const usePutRewardsId = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putRewardsId>>, TError,{id: number;data: PutRewardsIdBody}, TContext>, fetch?: RequestInit}
@@ -454,7 +450,7 @@ export const usePutRewardsId = <TError = void,
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary delete reward
+ * @summary Delete reward
  */
 export type deleteRewardsIdResponse204 = {
   data: void
@@ -530,7 +526,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
     export type DeleteRewardsIdMutationError = void
 
     /**
- * @summary delete reward
+ * @summary Delete reward
  */
 export const useDeleteRewardsId = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRewardsId>>, TError,{id: number}, TContext>, fetch?: RequestInit}

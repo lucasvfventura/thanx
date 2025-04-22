@@ -19,12 +19,14 @@ export default function SignupPage() {
 
   const { mutate, status } = usePostAuthenticationSignup({
     mutation: {
-      onSuccess: (data: any) => {
-        setToken(data.data.token);
-        router.push("/");
+      onSuccess: (data) => {
+        if (data.status === 200 && data.data.token) {
+          setToken(data.data.token);
+          router.push("/");
+        }
       },
-      onError: (err: any) => {
-        setError(err?.response?.data?.errors?.join(" ") || "Failed to create account.");
+      onError: () => {
+        setError("Failed to create account.");
       },
     },
   });

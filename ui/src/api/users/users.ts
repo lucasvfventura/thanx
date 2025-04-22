@@ -24,14 +24,11 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  GetUsers200,
   GetUsersId200,
-  GetUsersId403,
-  GetUsersId404,
   PostUsers201,
-  PostUsers422,
   PostUsersBody,
   PutUsersId200,
-  PutUsersId403,
   PutUsersIdBody
 } from '.././model';
 
@@ -40,10 +37,10 @@ import type {
 
 
 /**
- * @summary list users
+ * @summary List users
  */
 export type getUsersResponse200 = {
-  data: void
+  data: GetUsers200
   status: 200
 }
 
@@ -137,7 +134,7 @@ export function useGetUsers<TData = Awaited<ReturnType<typeof getUsers>>, TError
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary list users
+ * @summary List users
  */
 
 export function useGetUsers<TData = Awaited<ReturnType<typeof getUsers>>, TError = void>(
@@ -157,7 +154,7 @@ export function useGetUsers<TData = Awaited<ReturnType<typeof getUsers>>, TError
 
 
 /**
- * @summary create user
+ * @summary Create user
  */
 export type postUsersResponse201 = {
   data: PostUsers201
@@ -168,13 +165,8 @@ export type postUsersResponse403 = {
   data: void
   status: 403
 }
-
-export type postUsersResponse422 = {
-  data: PostUsers422
-  status: 422
-}
     
-export type postUsersResponseComposite = postUsersResponse201 | postUsersResponse403 | postUsersResponse422;
+export type postUsersResponseComposite = postUsersResponse201 | postUsersResponse403;
     
 export type postUsersResponse = postUsersResponseComposite & {
   headers: Headers;
@@ -209,7 +201,7 @@ export const postUsers = async (postUsersBody: PostUsersBody, options?: RequestI
 
 
 
-export const getPostUsersMutationOptions = <TError = void | PostUsers422,
+export const getPostUsersMutationOptions = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postUsers>>, TError,{data: PostUsersBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postUsers>>, TError,{data: PostUsersBody}, TContext> => {
     
@@ -236,12 +228,12 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type PostUsersMutationResult = NonNullable<Awaited<ReturnType<typeof postUsers>>>
     export type PostUsersMutationBody = PostUsersBody
-    export type PostUsersMutationError = void | PostUsers422
+    export type PostUsersMutationError = void
 
     /**
- * @summary create user
+ * @summary Create user
  */
-export const usePostUsers = <TError = void | PostUsers422,
+export const usePostUsers = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postUsers>>, TError,{data: PostUsersBody}, TContext>, fetch?: RequestInit}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postUsers>>,
@@ -255,7 +247,7 @@ export const usePostUsers = <TError = void | PostUsers422,
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary show user
+ * @summary Show user
  */
 export type getUsersIdResponse200 = {
   data: GetUsersId200
@@ -263,16 +255,11 @@ export type getUsersIdResponse200 = {
 }
 
 export type getUsersIdResponse403 = {
-  data: GetUsersId403
+  data: void
   status: 403
 }
-
-export type getUsersIdResponse404 = {
-  data: GetUsersId404
-  status: 404
-}
     
-export type getUsersIdResponseComposite = getUsersIdResponse200 | getUsersIdResponse403 | getUsersIdResponse404;
+export type getUsersIdResponseComposite = getUsersIdResponse200 | getUsersIdResponse403;
     
 export type getUsersIdResponse = getUsersIdResponseComposite & {
   headers: Headers;
@@ -310,7 +297,7 @@ export const getGetUsersIdQueryKey = (id: number,) => {
     }
 
     
-export const getGetUsersIdQueryOptions = <TData = Awaited<ReturnType<typeof getUsersId>>, TError = GetUsersId403 | GetUsersId404>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUsersId>>, TError, TData>>, fetch?: RequestInit}
+export const getGetUsersIdQueryOptions = <TData = Awaited<ReturnType<typeof getUsersId>>, TError = void>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUsersId>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
 const {query: queryOptions, fetch: fetchOptions} = options ?? {};
@@ -329,10 +316,10 @@ const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 }
 
 export type GetUsersIdQueryResult = NonNullable<Awaited<ReturnType<typeof getUsersId>>>
-export type GetUsersIdQueryError = GetUsersId403 | GetUsersId404
+export type GetUsersIdQueryError = void
 
 
-export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = GetUsersId403 | GetUsersId404>(
+export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = void>(
  id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUsersId>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getUsersId>>,
@@ -342,7 +329,7 @@ export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TE
       >, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = GetUsersId403 | GetUsersId404>(
+export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = void>(
  id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUsersId>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getUsersId>>,
@@ -352,15 +339,15 @@ export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TE
       >, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = GetUsersId403 | GetUsersId404>(
+export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = void>(
  id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUsersId>>, TError, TData>>, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary show user
+ * @summary Show user
  */
 
-export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = GetUsersId403 | GetUsersId404>(
+export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TError = void>(
  id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUsersId>>, TError, TData>>, fetch?: RequestInit}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -377,7 +364,7 @@ export function useGetUsersId<TData = Awaited<ReturnType<typeof getUsersId>>, TE
 
 
 /**
- * @summary update user
+ * @summary Update user
  */
 export type putUsersIdResponse200 = {
   data: PutUsersId200
@@ -385,16 +372,11 @@ export type putUsersIdResponse200 = {
 }
 
 export type putUsersIdResponse403 = {
-  data: PutUsersId403
+  data: void
   status: 403
 }
-
-export type putUsersIdResponse422 = {
-  data: void
-  status: 422
-}
     
-export type putUsersIdResponseComposite = putUsersIdResponse200 | putUsersIdResponse403 | putUsersIdResponse422;
+export type putUsersIdResponseComposite = putUsersIdResponse200 | putUsersIdResponse403;
     
 export type putUsersIdResponse = putUsersIdResponseComposite & {
   headers: Headers;
@@ -430,7 +412,7 @@ export const putUsersId = async (id: number,
 
 
 
-export const getPutUsersIdMutationOptions = <TError = PutUsersId403 | void,
+export const getPutUsersIdMutationOptions = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putUsersId>>, TError,{id: number;data: PutUsersIdBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof putUsersId>>, TError,{id: number;data: PutUsersIdBody}, TContext> => {
     
@@ -457,12 +439,12 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type PutUsersIdMutationResult = NonNullable<Awaited<ReturnType<typeof putUsersId>>>
     export type PutUsersIdMutationBody = PutUsersIdBody
-    export type PutUsersIdMutationError = PutUsersId403 | void
+    export type PutUsersIdMutationError = void
 
     /**
- * @summary update user
+ * @summary Update user
  */
-export const usePutUsersId = <TError = PutUsersId403 | void,
+export const usePutUsersId = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putUsersId>>, TError,{id: number;data: PutUsersIdBody}, TContext>, fetch?: RequestInit}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putUsersId>>,
@@ -476,11 +458,11 @@ export const usePutUsersId = <TError = PutUsersId403 | void,
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary delete user
+ * @summary Delete user
  */
-export type deleteUsersIdResponse200 = {
+export type deleteUsersIdResponse204 = {
   data: void
-  status: 200
+  status: 204
 }
 
 export type deleteUsersIdResponse403 = {
@@ -488,7 +470,7 @@ export type deleteUsersIdResponse403 = {
   status: 403
 }
     
-export type deleteUsersIdResponseComposite = deleteUsersIdResponse200 | deleteUsersIdResponse403;
+export type deleteUsersIdResponseComposite = deleteUsersIdResponse204 | deleteUsersIdResponse403;
     
 export type deleteUsersIdResponse = deleteUsersIdResponseComposite & {
   headers: Headers;
@@ -552,7 +534,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
     export type DeleteUsersIdMutationError = void
 
     /**
- * @summary delete user
+ * @summary Delete user
  */
 export const useDeleteUsersId = <TError = void,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUsersId>>, TError,{id: number}, TContext>, fetch?: RequestInit}

@@ -5,7 +5,7 @@
  * OpenAPI spec version: v1
  */
 
-export type GetRewards200RewardsItem = {
+export type GetRedemptions200RedemptionsItemReward = {
   id: number;
   title: string;
   description: string;
